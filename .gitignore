@@ -1,0 +1,6 @@
+# VSCode
+.VSCode
+*.code-workspace
+
+# Composer dependencies
+vendor

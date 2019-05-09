@@ -1,0 +1,38 @@
+{
+    "name": "jacobaldrich/wp-admin-menu",
+    "description": "A composer package to use WordPress admin menu functionality in OOP way",
+    "type": "package",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Jaco Baldrich",
+            "email": "hello@jacobaldrich.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0",
+        "composer/installers": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5",
+        "brain/monkey": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "JacoBaldrich\\WPAdminMenu\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JacoBaldrich\\WPAdminMenu\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit --bootstrap vendor/autoload.php tests",
+        "version": "./vendor/bin/phpcs -p . --standard=PHPCompatibility --runtime-set testVersion 7.0 --ignore=vendor,tests"
+    }
+}
