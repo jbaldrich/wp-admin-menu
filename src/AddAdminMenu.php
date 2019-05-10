@@ -31,7 +31,7 @@ class AddAdminMenu {
 	 *
 	 * @var string
 	 */
-	private $name = 'Menu item';
+	protected $name = 'Menu item';
 
 	/**
 	 * Set the slug of the menu item.
@@ -52,7 +52,7 @@ class AddAdminMenu {
 	 *
 	 * @var string
 	 */
-	private $capability = 'manage_options';
+	protected $capability = 'manage_options';
 
 	/**
 	 * Set the position of the menu item.
@@ -66,7 +66,7 @@ class AddAdminMenu {
 	 *
 	 * @var string
 	 */
-	private $page_title = 'Page Menu Item';
+	protected $page_title = 'Page Menu Item';
 
 	/**
 	 * The Page Hook Suffix of the menu item.
@@ -90,7 +90,7 @@ class AddAdminMenu {
 	 * @return void
 	 */
 	public function register(): void {
-		\add_action( 'admin_menu', [ $this, 'add_menu' ] );
+		$this->admin_menu->register( [ $this, 'add_menu' ] );
 	}
 
 	/**
@@ -114,11 +114,9 @@ class AddAdminMenu {
 	 */
 	public function render(): void {
 		/*
-		 * We allways have to ensure the user has the same capability
+		 * The package already ensures that the user has the same capability
 		 * to see the content of the menu.
 		 */
-		if ( \current_user_can( $this->admin_menu->capability ) ) {
-			echo '<h1>Menu here!</h1>';
-		}
+		echo '<h1>Menu here!</h1>';
 	}
 }

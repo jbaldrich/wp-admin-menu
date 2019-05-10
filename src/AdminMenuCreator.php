@@ -156,6 +156,18 @@ final class AdminMenuCreator {
 	}
 
 	/**
+	 * Registers the menu item into the WordPress execution flow.
+	 *
+	 * @param callable $function The function to execute.
+	 * @param string   $hook     The hook when the function will execute.
+	 */
+	public function register( callable $function, string $hook = 'admin_menu' ): void {
+
+		\add_action( $hook, $function );
+
+	}
+
+	/**
 	 * Sets capability.
 	 *
 	 * @param string $capability The capability.
@@ -211,6 +223,17 @@ final class AdminMenuCreator {
 	}
 
 	/**
+	 * Renders the view.
+	 */
+	private function render(): void {
+
+		if ( \current_user_can( $this->capability ) ) {
+			call_user_func( $this->view );
+		}
+
+	}
+
+	/**
 	 * Creates the menu item.
 	 *
 	 * @return string The resulting page's hook_suffix.
@@ -222,7 +245,9 @@ final class AdminMenuCreator {
 			$this->title,
 			$this->capability,
 			$this->slug,
-			$this->view,
+			function () {
+				$this->render();
+			},
 			$this->icon_url,
 			$this->position
 		);
@@ -245,7 +270,9 @@ final class AdminMenuCreator {
 			$this->title,
 			$this->capability,
 			$this->slug,
-			$this->view
+			function () {
+				$this->render();
+			}
 		);
 		if ( false === $hook_suffix ) {
 			$hook_suffix = '';

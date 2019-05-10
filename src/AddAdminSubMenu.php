@@ -28,25 +28,11 @@ final class AddAdminSubMenu extends AddAdminMenu {
 	protected $admin_menu;
 
 	/**
-	 * Set the name of the submenu item.
+	 * The slug of the parent.
 	 *
 	 * @var string
 	 */
-	private $name = 'Submenu item';
-
-	/**
-	 * Set the slug of the submenu item.
-	 *
-	 * @var string
-	 */
-	protected $child_slug = 'submenu-item-slug';
-
-	/**
-	 * Set the page title of the submenu item.
-	 *
-	 * @var string
-	 */
-	private $page_title = 'Page Submenu Item';
+	private $parent;
 
 	/**
 	 * The Page Hook Suffix of the submenu item.
@@ -61,6 +47,12 @@ final class AddAdminSubMenu extends AddAdminMenu {
 	 * The constructor creates a new instance of the AdminMenuCreator.
 	 */
 	public function __construct() {
+		if ( ! empty( $this->slug ) ) {
+			$this->parent = $this->slug;
+		}
+		$this->slug       = 'submenu-item-slug';
+		$this->name       = 'Submenu item';
+		$this->page_title = 'Page Submenu Item';
 		$this->admin_menu = AdminMenuCreator::run( $this->name, $this->child_slug, [ $this, 'render' ] );
 	}
 
@@ -84,11 +76,9 @@ final class AddAdminSubMenu extends AddAdminMenu {
 	 */
 	public function render(): void {
 		/*
-		 * We allways have to ensure the user has the same capability
-		 * to see the content of the submenu.
+		 * The package already ensures that the user has the same capability
+		 * to see the content of the menu.
 		 */
-		if ( \current_user_can( $this->admin_menu->capability ) ) {
-			echo '<h1>Submenu here!</h1>';
-		}
+		echo '<h1>Submenu here!</h1>';
 	}
 }
